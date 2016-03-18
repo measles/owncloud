@@ -1,0 +1,25 @@
+#!/bin/bash
+
+STORAGE_FILE="/tmp/ccleaner.last"
+
+if [ -s $STORAGE_FILE ] ; then
+	LAST=`cat /tmp/ccleaner.last`
+else
+	LAST="NONE"
+fi
+
+FILE=`ls -1 /tmp/owncloud*`
+
+if [ $FILE == $LAST ] ; then
+	rm -f "/tmp/$FILE"
+	rm $STORAGE_FILE
+	exit 0
+fi
+
+if [ echo $FILE -ne 0 ] ; then
+	echo $FILE > $STORAGE_FILE
+else
+	if [ -s $STORAGE_FILE ] ; then
+		rm $STORAGE_FILE
+	fi
+fi
